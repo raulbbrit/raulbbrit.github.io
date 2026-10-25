@@ -1,0 +1,38 @@
+/* Currículo: experiência, formação e stack */
+
+/* ---------- experiência ---------- */
+.job { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 0 0 36px; }
+.job + .job { padding-top: 36px; border-top: 1px solid var(--line); }
+.job:last-child { padding-bottom: 0; }
+.job .when { margin: 4px 0 0; }
+.job p:not(.when):not(.where) { margin: 14px 0 0; max-width: 64ch; color: var(--mut); text-wrap: pretty; }
+
+/* tempo de casa, calculado pelo script */
+.tenure { display: block; margin-top: 4px; color: var(--acc); font-variant-numeric: tabular-nums; }
+.tenure:empty { display: none; }
+
+/* ---------- formação ---------- */
+.edu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.edu h3 { font-size: 18px; }
+.edu .when { margin-bottom: 8px; }
+.certs { margin: 40px 0 0; max-width: 64ch; color: var(--mut); text-wrap: pretty; }
+
+/* ---------- stack ---------- */
+.stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 32px; }
+.stack h3 { font-size: 16px; }
+.stack p { margin: 8px 0 0; color: var(--mut); max-width: 40ch; }
+
+@media (hover: hover) {
+  .stack > div { transition: transform 0.3s var(--ease); }
+  .stack > div:hover { transform: translateX(6px); }
+}
+
+@media (max-width: 960px) {
+  .edu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .job { grid-template-columns: 1fr; gap: 0; }
+  .job .when { margin-bottom: 8px; }
+  .stack, .edu { grid-template-columns: 1fr; }
+}

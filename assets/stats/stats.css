@@ -1,0 +1,21 @@
+/* Faixa de números logo abaixo do hero */
+
+.proof { border-bottom: 1px solid var(--line); }
+.stats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+.stats li { padding: 40px 24px 44px 0; }
+.stats li + li { border-left: 1px solid var(--line); padding-left: 24px; }
+.stats strong {
+  display: block;
+  font-size: clamp(38px, 4.8vw, 60px);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+.stats span { display: block; margin-top: 12px; color: var(--mut); font-size: 14px; line-height: 1.5; max-width: 26ch; }
+
+@media (max-width: 960px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stats li:nth-child(3) { border-left: 0; padding-left: 0; }
+  .stats li:nth-child(n+3) { border-top: 1px solid var(--line); }
+}

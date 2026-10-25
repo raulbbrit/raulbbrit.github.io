@@ -1,0 +1,62 @@
+/* Hero: título animado, texto de abertura, botões e linhas de grade */
+
+.hero {
+  position: relative;
+  min-height: min(100svh, 880px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+.hero:focus { outline: none; }
+
+/* linhas de grade, no mesmo ritmo da faixa de números */
+.rails { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.rails .wrap { height: 100%; display: grid; grid-template-columns: repeat(4, 1fr); border-right: 1px solid var(--rail); }
+.rails i { border-left: 1px solid var(--rail); }
+
+.hero-copy { position: relative; z-index: 2; padding: 128px 0 88px; }
+
+h1 {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(38px, 6.6vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+h1 > span { display: block; }
+
+/* abertura: o título sobe letra por letra, uma única vez */
+.js h1 { visibility: hidden; }
+.js h1.ready { visibility: visible; }
+h1 .line { overflow: hidden; padding: 0.06em 0 0.12em; margin: -0.06em 0 -0.12em; }
+h1 .w { display: inline-block; white-space: nowrap; }
+h1 .ch {
+  display: inline-block;
+  animation: rise 0.9s var(--ease) both;
+  animation-delay: calc(var(--i) * 18ms + 150ms);
+}
+@keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
+
+.lead { margin: 28px 0 0; max-width: 46ch; font-size: 18px; color: var(--mut); text-wrap: pretty; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+/* título: a letra acende quando o mouse passa */
+@media (hover: hover) {
+  h1 .ch { transition: color 1.4s ease; }
+  h1 .ch:hover { color: var(--acc); transition-duration: 0s; }
+}
+
+@media (max-width: 720px) {
+  .hero { align-items: flex-start; min-height: max(100svh, 860px); }
+  .hero-copy { padding: 96px 0 56px; }
+  .rails .wrap { grid-template-columns: repeat(2, 1fr); }
+  .rails i:nth-child(n+3) { display: none; }
+  .lead { font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js h1 { visibility: visible; }
+  h1 .ch { animation: none; }
+}

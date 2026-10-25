@@ -44,10 +44,33 @@
     document.documentElement.className += ' js';
     setTimeout(function () { document.documentElement.classList.remove('js'); }, 3000);
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preload" href="assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/core/base.css">
+  <link rel="stylesheet" href="assets/ascii-field/ascii-field.css">
+  <link rel="stylesheet" href="assets/header/header.css">
+  <link rel="stylesheet" href="assets/hero/hero.css">
+  <link rel="stylesheet" href="assets/stats/stats.css">
+  <link rel="stylesheet" href="assets/marquee/marquee.css">
+  <link rel="stylesheet" href="assets/projects/projects.css">
+  <link rel="stylesheet" href="assets/face-demo/face-demo.css">
+  <link rel="stylesheet" href="assets/timeline/timeline.css">
+  <link rel="stylesheet" href="assets/resume/resume.css">
+  <link rel="stylesheet" href="assets/contact/contact.css">
+  <link rel="stylesheet" href="assets/footer/footer.css">
+  <link rel="stylesheet" href="assets/core/print.css" media="print">
+  <script defer src="assets/core/site.js"></script>
+  <script defer src="assets/ascii-field/ascii-field.js"></script>
+  <script defer src="assets/header/header.js"></script>
+  <script defer src="assets/hero/hero.js"></script>
+  <script defer src="assets/stats/stats.js"></script>
+  <script defer src="assets/marquee/marquee.js"></script>
+  <script defer src="assets/projects/projects.js"></script>
+  <script defer src="assets/face-demo/face-demo.js"></script>
+  <script defer src="assets/timeline/timeline.js"></script>
+  <script defer src="assets/resume/resume.js"></script>
+  <script defer src="assets/contact/contact.js"></script>
+  <script defer src="assets/footer/footer.js"></script>
 </head>
 <body>
   <a class="skip" href="#conteudo">Skip to content</a>
@@ -263,6 +286,7 @@
               <p><b>Problem.</b> Photos in the store reporting channel showed people.</p>
               <p><b>What I did.</b> A computer vision solution in Python and OpenCV that anonymizes faces.</p>
               <p><b>Result.</b> In production since delivery, processing images every day.</p>
+              <p class="tile-links"><button class="link-btn" type="button" id="cv-demo-open" hidden>Try it in your browser</button></p>
             </div>
           </article>
 
@@ -461,6 +485,25 @@
     </div>
   </footer>
 
-  <script src="assets/js/script.js"></script>
+  <dialog class="demo" id="cv-demo" aria-labelledby="cv-demo-title">
+    <div class="demo-head">
+      <h2 id="cv-demo-title">Face anonymization</h2>
+      <button class="demo-x" type="button" id="cv-close">Close</button>
+    </div>
+    <div class="demo-stage">
+      <canvas id="cv-out" role="img" aria-label="Image with faces covered by a mosaic"></canvas>
+      <p class="demo-empty">Use your camera or upload a photo with people in it.</p>
+    </div>
+    <div class="demo-bar">
+      <button class="btn primary" type="button" id="cv-cam">Use camera</button>
+      <button class="btn" type="button" id="cv-pick">Upload photo</button>
+      <input class="vh" type="file" id="cv-file" accept="image/*" tabindex="-1" aria-hidden="true">
+      <button class="btn" type="button" id="cv-save" hidden>Download image</button>
+      <label class="demo-check"><input type="checkbox" id="cv-boxes" checked> Show detection</label>
+    </div>
+    <p class="demo-status" id="cv-status" aria-live="polite"></p>
+    <p class="demo-note">The image is processed in your browser and never leaves your device. The first time, the browser downloads the detection model (BlazeFace, from MediaPipe). The production solution runs the same flow, detect and cover, in Python with OpenCV. It works best with faces turned to the camera; faces in profile or very small in the frame can be missed.</p>
+  </dialog>
+
 </body>
 </html>

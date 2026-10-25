@@ -1,0 +1,40 @@
+/* Contato: título grande, links, campo ASCII ao fundo e relógio de São Paulo */
+
+.contact { position: relative; overflow: hidden; padding-bottom: 112px; }
+.contact > .wrap { position: relative; z-index: 2; }
+.contact h2 { font-size: clamp(44px, 8vw, 104px); letter-spacing: -0.055em; line-height: 1; }
+.big-links { list-style: none; margin: 48px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.big-links li { border-bottom: 1px solid var(--line); }
+.big-links a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
+  padding: 26px 0;
+  text-decoration: none;
+  font-size: clamp(24px, 3.6vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  transition: color 0.2s, padding-left 0.35s var(--ease);
+}
+.big-links em { font-style: normal; font-weight: 400; font-size: clamp(14px, 1.5vw, 18px); letter-spacing: 0; color: var(--dim); transition: color 0.2s; }
+.big-links a:hover { color: var(--acc); padding-left: 12px; }
+.big-links a:hover em { color: var(--mut); }
+.contact > .wrap > .where { margin-top: 28px; }
+
+/* relógio de São Paulo */
+.clock { margin-left: 10px; padding-left: 10px; border-left: 1px solid var(--line-2); font-variant-numeric: tabular-nums; }
+.clock:empty { display: none; }
+.clock::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 8px; vertical-align: 1px; border-radius: 50%; background: #5fd38d; animation: pulse-g 2s ease-out infinite; }
+@keyframes pulse-g { 0% { box-shadow: 0 0 0 0 rgba(95, 211, 141, 0.55); } 80%, 100% { box-shadow: 0 0 0 8px rgba(95, 211, 141, 0); } }
+
+@media (max-width: 720px) {
+  /* sem espaço ao lado do título: o campo some */
+  .contact .layer, .contact .cap { display: none; }
+  .big-links a { flex-direction: column; gap: 4px; padding: 22px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .big-links a { transition: none; }
+  .clock::before { animation: none; }
+}

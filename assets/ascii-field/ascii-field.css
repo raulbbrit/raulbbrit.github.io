@@ -1,0 +1,32 @@
+/* Campo ASCII: os dois canvas (textura e pontos) e a legenda. Usado no hero e no contato. */
+
+.layer { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.field {
+  -webkit-mask-image: linear-gradient(to right, transparent 26%, #000 60%);
+          mask-image: linear-gradient(to right, transparent 26%, #000 60%);
+  animation: fade-in 1.6s 0.6s var(--ease) both;
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* legenda do campo ("espaço de embeddings, k = 4") */
+.cap {
+  position: absolute;
+  z-index: 2;
+  right: max(24px, calc((100% - 1120px) / 2));
+  bottom: 24px;
+  margin: 0;
+  color: var(--dim);
+  font: 400 12px/1 var(--mono);
+}
+
+@media (max-width: 720px) {
+  .field {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 50%, #000 70%);
+            mask-image: linear-gradient(to bottom, transparent 50%, #000 70%);
+  }
+  .cap { right: 24px; bottom: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field { animation: none; }
+}

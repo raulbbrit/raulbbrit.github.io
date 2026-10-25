@@ -1,0 +1,58 @@
+/* Demo de anonimização: janela com câmera ou foto, rostos cobertos por mosaico */
+
+html:has(.demo[open]) { overflow: hidden; }
+.demo {
+  width: min(880px, 100% - 32px);
+  max-height: calc(100svh - 32px);
+  padding: 24px;
+  overflow: auto;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  background: #0a0a0c;
+  color: var(--fg);
+}
+.demo::backdrop { background: rgba(0, 0, 0, 0.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.demo-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.demo h2 { font-size: 22px; letter-spacing: -0.02em; }
+.demo-x {
+  padding: 8px 12px;
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--mut);
+  font: 400 12px/1 var(--mono);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.demo-x:hover { color: var(--fg); border-color: var(--fg); }
+
+.demo-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.012);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+  overflow: hidden;
+}
+.demo-stage canvas { display: block; max-width: 100%; max-height: 56svh; width: auto; height: auto; }
+.demo-stage canvas:not(.on) { display: none; }
+.demo-empty { margin: 0; padding: 24px; color: var(--dim); text-align: center; }
+.demo-stage canvas.on + .demo-empty { display: none; }
+
+.demo-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
+.demo-bar .btn[hidden] { display: none; }
+.demo-check { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; color: var(--mut); font-size: 14px; cursor: pointer; }
+.demo-check input { width: 16px; height: 16px; margin: 0; accent-color: var(--acc); }
+.demo-status { min-height: 1.6em; margin: 14px 0 0; color: var(--acc); font: 400 13px/1.6 var(--mono); }
+.demo-note { margin: 8px 0 0; max-width: 72ch; color: var(--dim); font-size: 13px; text-wrap: pretty; }
+
+@media (max-width: 560px) {
+  .demo { padding: 18px; }
+  .demo-stage { min-height: 220px; }
+  .demo-check { margin-left: 0; }
+}

@@ -1,0 +1,10 @@
+/* Rodapé */
+
+.foot { border-top: 1px solid var(--line); padding: 28px 0 36px; color: var(--dim); font-size: 14px; }
+.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.foot a { color: var(--mut); text-decoration: none; transition: color 0.2s; }
+.foot a:hover { color: var(--acc); }
+
+@media (max-width: 560px) {
+  .foot-note { display: none; }
+}

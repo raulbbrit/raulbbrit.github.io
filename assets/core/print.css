@@ -1,0 +1,41 @@
+/* Impressão: a página vira um currículo limpo em papel ou PDF (carregado com media="print") */
+
+@page { margin: 16mm 14mm; }
+:root { --bg: #fff; --fg: #111; --mut: #333; --dim: #555; --line: #ccc; --line-2: #999; --acc: #2f4fbf; }
+html, body { background: #fff; color: var(--fg); font-size: 11pt; }
+body::after, .top, .skip, .rails, .layer, .cap, .actions, .marquee, .progress,
+.viz, .tl, .foot, .clock, .tile::before, .link-btn { display: none !important; }
+.wrap { width: 100%; }
+.hero { min-height: 0; border: 0; }
+.hero-copy { padding: 0 0 12pt; }
+.hero-copy::before { content: 'Raul Brito  ·  raulbbrit.github.io'; display: block; margin-bottom: 10pt; color: var(--dim); font: 500 10pt/1 var(--mono); white-space: pre; }
+.js h1 { visibility: visible; }
+h1 { font-size: 26pt; letter-spacing: -0.03em; }
+h1 > span { display: inline; }
+h1 > span + span::before { content: ' '; }
+.lead { margin-top: 8pt; max-width: none; font-size: 11pt; }
+.stats { grid-template-columns: repeat(4, 1fr); }
+.stats li { padding: 10pt 10pt 10pt 0; }
+.stats li + li { padding-left: 10pt; }
+.stats strong { font-size: 20pt; }
+.stats span { font-size: 9pt; }
+.section { padding: 14pt 0; }
+.split { grid-template-columns: 1fr; gap: 8pt; }
+.split > .head { position: static; }
+h2 { font-size: 16pt; }
+.grid { margin-top: 10pt; display: block; }
+.tile { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: none; break-inside: avoid; }
+.tile-body { padding: 10pt 0; }
+.t-churn, .t-cv, .t-net, .t-data { grid-column: auto; }
+.bar { display: none; }
+.meters { grid-template-columns: repeat(2, max-content); gap: 0 24pt; }
+.m-top strong { font-size: 12pt; }
+.big-links em { display: none; }
+.tile-links a[href^="http"]::after { content: ' (' attr(href) ')'; color: var(--dim); font-size: 9pt; }
+.job, .edu > div, .stack > div { break-inside: avoid; }
+.contact { padding-bottom: 0; }
+.contact h2 { font-size: 16pt; letter-spacing: -0.02em; }
+.big-links { margin-top: 8pt; }
+.big-links a { padding: 6pt 0; font-size: 12pt; }
+.big-links a::after { content: attr(href); font-weight: 400; color: var(--dim); }
+.anim .rv, .anim .tl .seg { opacity: 1 !important; transform: none !important; }

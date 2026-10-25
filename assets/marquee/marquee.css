@@ -1,0 +1,59 @@
+/* Faixa de ferramentas que corre na horizontal, com botão de pausa */
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+/* bordas que somem no preto, por cima da faixa e por baixo do botão */
+.marquee::before, .marquee::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 1;
+  width: 8%;
+  pointer-events: none;
+}
+.marquee::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+.marquee::after { right: 0; width: calc(max(24px, (100% - 1120px) / 2) + 128px); background: linear-gradient(to left, var(--bg) calc(100% - 56px), transparent); }
+.marquee-btn {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: max(24px, calc((100% - 1120px) / 2));
+  transform: translateY(-50%);
+  padding: 6px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  background: var(--bg);
+  color: var(--dim);
+  font: 400 12px/1 var(--mono);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.marquee-btn:hover { color: var(--fg); border-color: var(--fg); }
+.marquee.paused ul { animation-play-state: paused; }
+.marquee-track { display: flex; width: max-content; }
+.marquee ul {
+  flex: none;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 18px 0;
+  gap: 40px;
+  padding-right: 40px;
+  font: 400 14px/1 var(--mono);
+  color: var(--dim);
+  animation: marquee 48s linear infinite;
+}
+.marquee li { white-space: nowrap; display: flex; align-items: center; gap: 40px; }
+.marquee li::after { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--line-2); }
+@keyframes marquee { to { transform: translateX(-100%); } }
+
+/* sem movimento: vira uma lista com rolagem lateral */
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .marquee ul { animation: none; }
+  .marquee ul[aria-hidden] { display: none; }
+  .marquee-btn { display: none; }
+}
