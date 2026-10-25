@@ -20,9 +20,10 @@
 }
 
 @media (max-width: 720px) {
+  /* no celular o campo fica só na faixa de baixo; o resto some para não passar por trás do texto */
   .field {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 50%, #000 70%);
-            mask-image: linear-gradient(to bottom, transparent 50%, #000 70%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent calc(100% - 350px), #000 calc(100% - 290px));
+            mask-image: linear-gradient(to bottom, transparent calc(100% - 350px), #000 calc(100% - 290px));
   }
   .cap { right: 24px; bottom: 16px; }
 }

@@ -31,12 +31,13 @@
     h1.classList.add('ready');
   }
 
-  // campo: quatro áreas separadas, k = 4
+  // campo: quatro áreas separadas, k = 4. No celular ficam na faixa reservada abaixo
+  // dos botões (padding-bottom do .hero-copy), medidas a partir do fim do hero.
   S.field(S.$('#field'), S.$('#field-bg'), {
-    centers: function (narrow) {
-      return narrow
-        ? [[0.26, 0.76], [0.74, 0.74], [0.30, 0.93], [0.76, 0.94]]
-        : [[0.85, 0.42], [0.95, 0.62], [0.70, 0.70], [0.86, 0.78]];
+    centers: function (narrow, W, H) {
+      if (!narrow) return [[0.85, 0.42], [0.95, 0.62], [0.70, 0.70], [0.86, 0.78]];
+      var up = function (px) { return 1 - px / H; };
+      return [[0.26, up(232)], [0.74, up(250)], [0.30, up(104)], [0.76, up(98)]];
     }
   });
 

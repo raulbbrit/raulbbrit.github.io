@@ -56,3 +56,6 @@ html:has(.demo[open]) { overflow: hidden; }
   .demo-stage { min-height: 220px; }
   .demo-check { margin-left: 0; }
 }
+
+/* vídeo da câmera: precisa estar na página para o Safari do iPhone, mas não aparece */
+.demo-video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }

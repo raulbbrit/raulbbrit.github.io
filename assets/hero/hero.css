@@ -48,9 +48,11 @@ h1 .ch {
   h1 .ch:hover { color: var(--acc); transition-duration: 0s; }
 }
 
+/* celular: o texto vem primeiro e o campo ASCII ocupa uma faixa fixa logo abaixo,
+   sem altura mínima que deixe um vão vazio entre os botões e o campo */
 @media (max-width: 720px) {
-  .hero { align-items: flex-start; min-height: max(100svh, 860px); }
-  .hero-copy { padding: 96px 0 56px; }
+  .hero { align-items: flex-start; min-height: 0; }
+  .hero-copy { padding: 104px 0 330px; }
   .rails .wrap { grid-template-columns: repeat(2, 1fr); }
   .rails i:nth-child(n+3) { display: none; }
   .lead { font-size: 16px; }

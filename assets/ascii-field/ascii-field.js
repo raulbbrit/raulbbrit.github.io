@@ -24,7 +24,7 @@
   }
 
   /* cv: canvas dos pontos; bg: canvas da textura; os dois ficam dentro da seção que reage ao mouse.
-     opts: centers(narrow) devolve os 4 centros; seed, per e spread ajustam a nuvem;
+     opts: centers(narrow, W, H) devolve os 4 centros em fração da área; seed, per e spread ajustam a nuvem;
      wideOnly desliga o campo no celular */
   S.field = function (cv, bg, opts) {
     if (!cv || !bg) return;
@@ -39,7 +39,7 @@
     var mx = -1e3, my = -1e3;
     var running = false, last = 0, raf = 0;
 
-    function centers() { return opts.centers(narrow); }
+    function centers() { return opts.centers(narrow, W, H); }
     function off() { return opts.wideOnly && narrow; }
 
     function build() {
@@ -163,11 +163,19 @@
     });
     host.addEventListener('pointerleave', function () { mx = -1e3; my = -1e3; });
 
+    // refaz o campo quando a seção muda de tamanho (girar o celular, fonte que termina de
+    // carregar, título que muda de altura), não só quando a janela muda
     var rq = 0;
-    window.addEventListener('resize', function () {
+    function rebuild() {
       cancelAnimationFrame(rq);
-      rq = requestAnimationFrame(function () { build(); draw(performance.now()); if (off()) stop(); else start(); });
-    });
+      rq = requestAnimationFrame(function () {
+        var r = host.getBoundingClientRect();
+        if (Math.floor(r.width) === W && Math.floor(r.height) === H) return;
+        build(); draw(performance.now()); if (off()) stop(); else start();
+      });
+    }
+    if ('ResizeObserver' in window) new ResizeObserver(rebuild).observe(host);
+    else window.addEventListener('resize', rebuild);
     if (S.hasIO) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); else stop(); }).observe(host);
     }
