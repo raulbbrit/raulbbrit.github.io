@@ -76,6 +76,10 @@
     });
   }
 
+  // GPU de celular Android (Adreno, Mali) roda o modelo em meia precisão e pode devolver zero
+  // rostos sem dar erro; lá o WebAssembly na CPU é rápido o bastante e confiável
+  var ANDROID = /Android/i.test(navigator.userAgent);
+
   function mediapipe() {
     return import(MP + '/vision_bundle.mjs').then(function (m) {
       return m.FilesetResolver.forVisionTasks(MP + '/wasm').then(function (fs) {
@@ -84,21 +88,26 @@
             baseOptions: { modelAssetPath: MP_MODEL, delegate: d },
             runningMode: 'IMAGE',
             minDetectionConfidence: MIN_SCORE
-          });
+          }).then(function (det) { return wrap(det, d, make); });
         }
-        return make('GPU').catch(function () { return make('CPU'); });
+        return ANDROID ? make('CPU') : make('GPU').catch(function () { return make('CPU'); });
       });
-    }).then(function (d) {
-      return {
-        name: 'mediapipe', photoGrids: [1, 2, 3, 4], videoGrids: [1, 2],
-        detect: function (c) {
-          return Promise.resolve(d.detect(c).detections.map(function (r) {
-            var b = r.boundingBox;
-            return { x: b.originX, y: b.originY, w: b.width, h: b.height, s: (r.categories[0] || {}).score || 0 };
-          }));
-        }
-      };
     });
+  }
+
+  function wrap(d, delegate, make) {
+    var cpu = null;
+    return {
+      name: 'mediapipe', delegate: delegate, photoGrids: [1, 2, 3, 4], videoGrids: [1, 2],
+      // detector na CPU, para conferir quando a GPU não acha nada
+      cpu: delegate === 'GPU' ? function () { return cpu || (cpu = make('CPU')); } : null,
+      detect: function (c) {
+        return Promise.resolve(d.detect(c).detections.map(function (r) {
+          var b = r.boundingBox;
+          return { x: b.originX, y: b.originY, w: b.width, h: b.height, s: (r.categories[0] || {}).score || 0 };
+        }));
+      }
+    };
   }
 
   // descarta detecções cujos pontos não formam um rosto: olhos lado a lado e quase na mesma
@@ -150,6 +159,7 @@
     loading = first.catch(function () { return timeout(tensorflow().then(probe), 45000); }).then(function (e) {
       engine = e; say('');
       dlg.setAttribute('data-engine', e.name);
+      if (e.delegate) dlg.setAttribute('data-delegate', e.delegate);
       return e;
     }, function (err) {
       loading = null;
@@ -346,7 +356,18 @@
         say(T.working);
         // mostra a foto já, enquanto procura os rostos
         paint(c, c.width, c.height, [], false);
-        return findFaces(c, c.width, c.height, engine.photoGrids);
+        return findFaces(c, c.width, c.height, engine.photoGrids).then(function (faces) {
+          if (faces.length || !engine.cpu) return faces;
+          // a GPU pode falhar calada: tenta na CPU e, se ela achar rostos, passa a usar só ela
+          var gpu = engine;
+          return gpu.cpu().then(function (e) {
+            engine = e;
+            return findFaces(c, c.width, c.height, e.photoGrids).then(function (f) {
+              if (f.length) dlg.setAttribute('data-delegate', 'CPU'); else engine = gpu;
+              return f;
+            });
+          }, function () { return faces; });
+        });
       }).then(function (faces) {
         still = c; stillFaces = faces;
         paint(c, c.width, c.height, faces, false);
