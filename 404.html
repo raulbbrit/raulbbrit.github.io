@@ -1,18 +1,18 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
   <meta name="color-scheme" content="dark">
   <meta name="robots" content="noindex">
-  <title>Página não encontrada | Raul Brito</title>
+  <title>Page not found | Raul Brito</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%237c9cff'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
-    /* página isolada: estilos aqui dentro para funcionar em qualquer caminho */
+    /* standalone page: styles inline so it works at any path */
     :root { --bg: #000; --fg: #ededed; --mut: #a0a0a8; --dim: #7d7d86; --line-2: #3a3a40; --acc: #7c9cff; }
     * { box-sizing: border-box; }
     html { background: var(--bg); }
@@ -51,17 +51,17 @@
 <body>
   <main>
     <pre aria-hidden="true">.:-=+*#%@   ?   @%#*+=-:.</pre>
-    <h1>Esta página não existe.</h1>
-    <p>O endereço pode ter mudado ou ter sido digitado errado. Volte ao início para ver os projetos.</p>
-    <p lang="en">This page does not exist. Go back to the start to see the projects.</p>
+    <h1>This page does not exist.</h1>
+    <p>The address may have changed or been mistyped. Go back to the start to see the projects.</p>
+    <p lang="pt-BR">Esta página não existe. Volte ao início para ver os projetos.</p>
     <div class="actions">
-      <a class="primary" href="index.html" data-site="/">Voltar ao início</a>
-      <a href="en/index.html" data-site="/en/" lang="en" hreflang="en">English version</a>
+      <a class="primary" href="index.html" data-site="/">Back to start</a>
+      <a href="pt/index.html" data-site="/pt/" lang="pt-BR" hreflang="pt-BR">Versão em português</a>
     </div>
   </main>
   <script>
-    // no GitHub Pages esta página aparece em qualquer caminho (/x/y/z), então os links
-    // relativos quebrariam; lá eles usam a raiz do site. Aberta do disco, ficam relativos.
+    // on GitHub Pages this page shows up at any path (/x/y/z), so relative links
+    // would break; there they use the site root. Opened from disk, they stay relative.
     if (location.protocol !== 'file:') {
       document.querySelectorAll('[data-site]').forEach(function (a) { a.href = a.getAttribute('data-site'); });
     }
